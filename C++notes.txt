@@ -1,0 +1,1862 @@
+1) Difference between Compiler and Linker:
+	Ans: The compiler will compile the code and create obj file for the same. Compiler will create .obj file for each .cpp file whereas
+		 The Linker will resolve the dependencies between the .obj file(eg dependencies of header files etc)
+
+2) How does the C++11 Standard better support multicore CPUs?(ch 1)
+
+
+3) What is the difference between an interpreter and a compiler?
+	Ans : Interpreter will read line by line script from the line and perform the action, whereas
+	      Compiler will compile the code and create .obj file
+4) Program divided into  2 parts:
+		a) Preprocessor Directives
+			Usually started with #include
+			 1) <> use with include typically when we include Standard Library but there is no such restriction to only use <>, its just recommended
+			 2) "" we use when we include header file which is local to the project
+		
+		b) Main body of the Program
+			Start with the function
+			int main()
+			{
+				
+			}
+		
+		    Could  also be written as: used when we pass some argument along with the .exe file
+			int main(int argc,int *argv[])
+			{
+			
+			}
+5) The actual text, including the quotes “Hello World”, is called a
+   string literal.
+
+6) Every function should return value until its not explicitily mentioned. So the return value will be useful in the case when parent application launches a 
+   child application and want to know about its status , so we can use the function return type in main() to interpret the status of child application.
+   
+		Child1()
+		{ 
+			if(Condition is fine)
+			{
+				return 0;
+			}
+			else
+			{
+				return 1;
+			}
+		}
+		int main()
+		{
+			if(Child1()==0)
+			{
+				cout<<"Child process works fine";
+			}
+			else
+			{
+				cout<<"Child process fails";
+			}
+		}
+7) If cout is located in 2 different location so which one should compiler use , so in this case in order to reduce the chances of collisions namespace can help,
+   if we use std::cout then compiler knows which cout to use at that particular time.
+   
+   Two ways to use namespace:
+		1) Using namespace inside main()
+				main()
+				{
+					using namespace std;// this will include all the functionality of namespace
+				}
+		2) Using only the one we are going to use from namespace
+				main()
+				{
+					using namespace std::cout;
+					using namespace std::endl;
+				}
+
+8) Comments can be written in 2 forms 
+	1) Single line comments(//)
+	2) Multi line comments(/**/)
+
+9) In the cases where a function is not required to make a decision or return a sucess or failure status then we can use it as a void function
+10) << : Insertion operator, insert data into output stream.
+11) >> : Extraction operator , extracts data from input stream.
+12) Storing data into 2 variable at one time
+		cin>>variable1>>variable2
+
+
+13) Input Stream -->cin (extracts data from input stream) cout(Insert data into output stream)-->Output Stream
+
+14) Small program for cin and cout:
+		#include <iostream>
+		#include <string>
+		using namespace std;
+		int main()
+		{
+			data_type Inp, out;
+			cin>>inp;
+			cout<<"Output is "<<out;
+			return 0;
+		}
+15) When do you need to program command-line arguments?
+	Ans::: To allow the user to alter the behavior of a program. For example, the command ls in Linux or dir in Windows enables you to see the contents within the current
+	directory or folder. To view files in another directory, you would specify the pathof the same using command-line arguments, as seen in ls / or dir \.
+	
+16) Variables and Constants
+	Memory overview :
+		1) All the devices contains the microprocessor and the temporary storage called RAM(Random Access Storage).
+		2) The microprocessor executes your application, and in doing so it, works with the RAM to fetch the application to be executed as well as the data associated
+           with it, which includes that displayed on the screen and that entered by the user.
+		3) We need a refernce to access the memory location and variable name serves the same ( for eg int a , in this a=0x1335456, which is nothing but a memory address)
+		
+	Variable:
+		1) So when ever we declare and variable its is recommended to add a initialization value to it , otherwise that memory will contain a random/garbage value
+		
+		Variables Scope Types:
+			a) Local
+			b) Global
+17) Datatype and Values:
+	a) bool : true or false
+	b) char : 0 to 256
+	c) unsigned short int : 0 to 65535
+	d) short int : -32768 to 32767
+	e) unsigned long int : 0 to 4,294,967,295
+
+18) Signed and Unsigned
+	MSB : tells whether the number is positive or negative , 1 means negative and 0 means positive , so 1Byte = -128 to 127
+	
+19) sizeof(): tells the size of variable in bytes:
+		Size of bool: 1
+		Size of char: 1
+		Size of unsigned short int: 2
+		Size of short int: 2
+		Size of unsigned long int: 4
+		Size of long: 4
+		Size of int: 4
+		Size of unsigned long long: 8
+		Size of long long: 8
+		Size of unsigned int: 4
+		Size of float: 4
+		Size of double: 8
+	The output changes with compiler, hardware and OS
+	
+20) auto : keyword used when we dont want to specify the variable datatype then we intialize a variable with a value and let the compiler to take best possible option.
+	
+	And when intialization is not for the variable with auto then it will throw compilation error
+		Example:
+			auto variable1=true;
+			auto variable2=250000000;
+			cout<<sizeof(variable1)<<endl<<sizeof(variable2);
+		Ans:
+			1 bytes// which means bool
+			8 bytes // which means long long
+			
+	example of auto :
+	1) one without auto:
+		for ( vector<int>::const_iterator Iterator = MyNumbers.begin();Iterator < MyNumbers.end();++Iterator )
+		cout << *Iterator << “ “;
+	2) one with auto:
+		for( auto Iterator = MyNumbers.begin();Iterator < MyNumbers.end();++Iterator )
+		cout << *Iterator << “ “;
+		
+21) typedef : used when we are dealing with the complex datatype  that can have a complex syntax
+		For Example:
+			typedef unsigned int STRICTLY_POSITIVE_INTEGER;
+			STRICTLY_POSITIVE_INTEGER PosNumber = 4532;
+			
+22) Constants : when there are certain value which should remain same throughout the application, at that time we will use constant. It can be of many types:
+	1)Literal constants
+		Example: std::cout << “Hello World” << std::endl;//Hello World is literal constants
+	2)Declared constants using the const keyword
+		Example: const type-name constant-name;// const double pi =22/7;
+	3)Constant expressions using the constexpr keyword (new to C++11)
+		Example :
+			There is a very small difference between const and constexpr:
+				1) 	we can have a optimzation possiblity in application and complier point of view.
+				2)  constexpr double GetPi() {return 22.0 / 7;}
+					constexpr double TwicePi() {return 2 * GetPi();}
+					
+						If we are not using constexpr then the second line will become and runtime complilation
+	4)Enumerated constants using the enum keyword
+		Example :
+			enum RainbowColors
+			{
+				Violet = 0,
+				Indigo,
+				Blue,
+				Green,
+				Yellow,
+				Orange,
+				Red
+			};
+		NOTE: When declaring an enumerated constant, the compiler converts the enumerated values such as Violet and so on into integers.
+			  Each enumerated value specified is one more than the previous value. You have the choice of specifying a starting value and if
+			  this is not specified, the compiler takes it as 0. So, North is evaluated as value 0.
+			  If you want to, you can also specify an explicit value against each of the enumerated constants by initializing them.
+	5)Defined constants that are not recommended and deprecated
+		
+		NOTE: Defining constants using the preprocessor via #define is deprecated and should not be used.
+23) Naming a Variable:
+		It should be descriptive and tells what the value means that variable is storing.
+		For Example:
+			bool IsHeadLampOn = false;
+			
+24) 	Questions:
+		
+		Why does C++ give me the option of using short int and int and long int? Why not just always use the integer that always allows for the highest number
+		to be stored within?
+		
+		Ans:
+		C++ is a programming language that is used to program for a variety of applications, many running on devices with little computing capacity or memory
+		resources. The simple old cell phone is one example where processing capacity and available memory are both limited. In this case, the programmer can often save
+		memory or speed or both by choosing the right kind of variable if he doesn’t need high values. If you are programming on a regular desktop or a high-end smartphone,
+		chances are that the performance gained or memory saved in choosing one integer type over another is going to be insignificant and in some cases even
+		absent.
+
+25) 	Why should I not use global variables frequently? Isn’t it true that they’re usable throughout my application and I can save some time otherwise lost to
+		passing values around functions?
+		
+		Ans: Even though they can be used from any place in application but there are chances to its value is manipulated and because of that it can affect rest of the application
+			 so if we declare variable with global scope then its reliability is affected.
+			 
+26) Arrays:
+	
+	Static Arrays:
+	
+		One dimensional Array:
+	
+			Continous block of memory store element of same kind
+			Types of declaration:
+				a) int array[5]={0}//will intialize all the entry to zero
+				b) int array[]={32,87}//will create a array but length is not sure and first 2 elements of the array is 32 and 87.	
+				c) Above arrays mentioned are static arrays , because the length of such arrays are defined by the programmer at compile time,
+					and we cannot store more than that.
+		
+			Elements in an array can be accessed using their zero-based index. These indexes are called zero-based because the first element in an array is at index 0.
+		
+			Note that this exceeds the bound of the array as the compiled code tries accessing the sixth element in the array which is beyond its defined bounds.
+		
+			This kind of error is called a fence-post error.
+		
+		Multidimensional Array:
+		
+			Initialize n-D array:
+		
+				int SolarPanelIDs [2][3] = {{0, 1, 2}, {3, 4, 5}};
+		
+				NOTE:
+				Even though C++ enables us to model multidimensional arrays,the memory where the array is contained is one-dimensional. So,
+				the compiler maps the multidimensional array into the memory space, which expands only in one direction.
+				If you wanted to, you could’ve also initialized the array called SolarPanelIDs like the following, and it would still be the same:
+				
+				int SolarPanelIDs [2][3] = {0, 1, 2, 3, 4, 5};
+	Dynamic Arrays:
+	
+		To use the dynamic array class std::vector, you need to include header vector, which is also shown in Line 1 of Listing 4.4.
+		#include <vector>
+
+27) Strings:
+	
+	In C strings are:
+	Note that the last character in the array is a null character ‘\0’. This is also called the string-terminating character because it tells the compiler that the string has ended.
+	
+	Adding '\0' in between the string will not change size of the string but when we print the string it will print upt the point where '\0' is added.
+	
+		NOTE:
+			To use a C++ string, you need to include the header string:
+			#include <string>
+
+			
+
+28) getline(cin,variable_name) : to get input from the user.
+	setline(cout, variable_name) : To print output on the screen
+	
+29) Statements: Each line of code until ; is one statement
+		
+		NOTE:
+			Whitespaces typically are not visible to the compiler. This includes
+			spaces, tabs, line feeds, carriage returns, and so on. Whitespaces
+			within string literals, though, make a difference to the output.
+			
+	
+	The following would be invalid:
+	
+		cout << “Hello
+		World” << endl; // new line in string literal not allowed
+		
+		Such code typically results in an error indicating that the compiler is missing a closing
+		quote (”) and a statement-terminating semicolon (;) in the first line. If you need to
+		spread a statement over two lines for some reason, you can do it by inserting a backslash
+		(\) at the end:
+		
+		cout << “Hello \
+		World” << endl; // split to two lines is OK
+		
+				OR
+		cout << “Hello “
+		“World” << endl; // two string literals is also OK
+		
+30) l-value and r-value:
+	
+		l-values often refer to locations in memory
+		r-value represent the value stored into that memory.
+		
+		
+		Prefix and Postfix increment:
+			
+			You often hear of cases where prefix increment or decrement operators
+			are preferred on grounds of better performance. That is,
+			++MyInt is preferred over MyInt++.
+			This is true at least theoretically because with the postfix operators,
+			the compiler needs to store the initial value temporarily in
+			the event of it needing to be assigned. The effect on performance
+			in these cases is negligible with respect to integers, but in the
+			case of certain classes there might be a point in this argument.
+			
+31) Operators:
+		
+		a) Assignment (=)
+		b) Relational (<,>)
+		c) Logical ( &&,||)
+		d) Compound Assignment (+=,-=)
+		e) Bitwise 
+		
+		
+32) Conditional:
+		a) if()
+		b) if()...else()
+		c) if()..elseif()..else()
+		d) Nested if()
+		e) Switch Case
+		f) Ternary (?:)
+		g) while()
+		h) do..while()
+		i) for()
+		
+33) Reference Operator(&):
+		int a =40;
+		if a=40 then &a is a address where this value is stored
+		
+34) Dereference a pointer(*) also called as indirection operator : will tells the value stored at that particular address.
+
+35) Size of pointer depends on the compiler and OS and it is independent of the value it points to. ( 4 bytes for 32 bit processor and 8 bytes for 64 bits processor)
+
+36) Dynamic Memory Allocation:
+	a) new and delete[] is used for dynamic memory allocation, dynamic memory allocation is used when we are not sure about the block size.
+		
+		Example:
+			Type* name =new Type;//Get a pointer to a Type
+			Type* name=new Type[10] // Pointer pointing to a block of 10 elements of type Type
+			
+			// Whenever a new is used usage of delete is also recommended because otherwise this memory will be remain occupied in the application thus reduce the available
+			 memory then this can make program slow also known as leak
+
+			delete name;
+			delete[] name;
+			
+		NOTE:
+		Call of new is not guaranted to be successful it depends on the state and available memory resource at that time.
+	
+37) Types of const usage with pointer:
+
+	a) const int* a=&b; // in this kind of usage the data to which pointer pointed to remain const but the address can be change means( a=&c its ok but *a++ not allowed)
+	b) int *const a =&b //means the data which pointer points to can be changed but address remain const ( a=&c , NOT OK ,*a++ , its OK)
+	c) const int * const = means the data as well as the address remain constant.
+	
+		#include <iostream>
+		using namespace std;
+
+		void CalcArea(const double* const pPi, // const pointer to const data
+					  const double* const pRadius, // i.e. nothing can be changed
+					  double* const pArea) //change pointed value, not address
+					{
+						// check pointers before using!
+						if (pPi && pRadius && pArea)
+						*pArea = (*pPi) * (*pRadius) * (*pRadius);
+					}
+
+		int main()
+			{
+				const double Pi = 3.1416;
+				cout << “Enter radius of circle: “;
+				double Radius = 0;
+				cin >> Radius;
+
+				double Area = 0;
+				CalcArea (&Pi, &Radius, &Area);
+
+				cout << “Area is = “ << Area << endl;
+
+				return 0;
+			}
+			
+			
+38) Problems of using pointers:
+		a) Memory Leaks: It occurs when the programmer use (new) to allocate the memory but donot release the memory that results is less available memory thus make program slower.
+		b) When pointer doesn't point to a valid memory location then there is a possiblity of getting wrong / junk value or in worst case program can crash.
+		c) Dangling pointer	: When pointer points to random address.
+		
+		
+39) If (new) operator is not successful in creating the pointer then it will throw exception bad alloc.
+	To handle these issue we can use a new version of (new) operator.
+	
+	Example: used when we want to allocate a large amount of block , if (new) is not successful then NULL is assigned to pointer so that it doesnt land in exception
+		
+		int * a=new(nothrow) int[0xfffffff];
+		
+40) Reference Variable:
+	A reference is an alias for a variable. When you declare a reference, you need to initialize
+	it to a variable. Thus, the reference variable is just a different way to access the data
+	stored in the variable being referenced.
+	
+	
+	
+	int Original = 30;
+	cout << “Original = “ << Original << endl;
+	cout << “Original is at address: “ << hex << &Original << endl;
+	
+	int& Ref = Original;
+	cout << “Ref is at address: “ << hex << &Ref << endl;
+	
+	int& Ref2 = Ref;
+	cout << “Ref2 is at address: “ << hex << &Ref2 << endl;
+	/cout << “Ref2 gets value, Ref2 = “ << dec << Ref2 << endl;
+	
+	
+41) Which one to prefer:
+	
+	void CalculateArea (const double* const pRadius, double* const pArea);
+	void CalculateArea (const double& radius, double& area);
+	
+	
+	Ans:
+	The latter, using references as references, is not invalid, whereas pointers can be.
+		Besides, it’s simpler, too.
+		
+		
+42) Constructor:
+
+	Constructor is a special kind of function which has a same name as class and donot have a return type.Mainly used to initialize
+	It can be implemented inside or externally outside the class and it is always called when object is created.
+	Constructor can be invoked without argument called default constructor, if programmer dont write any constructor then compiler creates one but dont initialize any attribute.
+	
+	::Scope resolution operator.
+
+	Constructor can also be overloaded, we can do using same name but different arguments
+	Example:
+		
+		class Human{
+		private:
+			-----
+		public:
+		
+		Human()
+		{
+		}
+		Human(string Humanname)
+		{
+		name=Humanname;
+		}
+		}
+		int main()
+		{
+		Human obj1;// uses default constructor
+		Human obj2("Adam");//uses overload constructor
+		}
+	
+	
+	Use Case without Default constructor: // used only when we have a requirement to create a objection when certain variable are passed.
+	
+		If we dont have a default constructor and we try to use default constructor for object initialization we will face compilation error
+			// Message : no appropriate default constructor available.
+		Example:
+		
+			class Human{
+			private:
+			public:
+			Human(int age, string humanName)
+			{
+				Age=age;
+				name= humanName;
+			}
+			}
+			int main()
+			{
+				//Human obj1; //this will throw error as there is no default constructor
+				Human obj2(30,"adam");// this will work
+				return 0
+			}
+	Constructor using Initialization lists
+		Example:
+		Human(string HumanName="Adam", int age=25)
+		:Name(HumanName),:Age(age) //:InputVariable(Valuefor the variable)
+		{
+		}
+
+43) Destructor:
+	
+	Its same like constructor except use of tilde(~) this is automatically called when object is deleted, we can even use the destructor to delete certain extra variable or entity as per requirements.
+	
+	Example:
+		
+		class Human
+		{
+			~Human()
+			{
+			}
+		}
+	When to use:
+	
+	Destructor is invoked when object goes out of scope or its deleted via  delete keyword, so destructor is the perfect place to reset variables and release dynamic allocated 
+	memory and other resources.
+	
+	NOTE:
+		
+		Destructor cannot be overloaded . There should only be one desctructor per class and there is no destructor overloading.
+
+44) Copy Constructor:
+	
+		Problem solved by it:
+			
+			Shallow Copy: Classes such as MyString, shown in Listing 9.7, contain a pointer member that points to dynamically allocated memory,
+			              allocated in the constructor using new and deallocated in the destructor using delete[]. When an object of this class is copied, the pointer member
+                          is copied, but not the pointed buffer, resulting in two objects pointing to the same
+			NOTE
+				dynamically allocated buffer in memory. This is called a shallow copy and presents a
+				threat to the stability of the program
+				
+		
+			Example:
+				class MyString
+				{
+					private:
+						char* Buffer;
+
+					public:
+						MyString(const char* InitialInput)
+						{
+							if(InitialInput != NULL)
+							{
+								Buffer = new char [strlen(InitialInput) + 1];
+								strcpy(Buffer, InitialInput);
+							}
+							else
+							{
+								Buffer = NULL;
+							}
+						}
+						~MyString()
+						{
+							cout << “Invoking destructor, clearing up” << endl;
+							if (Buffer != NULL)
+								delete [] Buffer;
+						}
+
+				};	
+				void UseMyString(MyString Input)
+				{
+					cout << “String buffer in MyString is “ << Input.GetLength();
+					cout << “ characters long” << endl;
+					cout << “Buffer contains: “ << Input.GetString() << endl;
+					return;
+				}
+
+				int main()
+				{
+					MyString SayHello(“Hello from String Class”);
+
+					UseMyString(SayHello);
+
+					return 0;
+				}
+				
+				Pictorial rep:
+				
+				---------------
+				|Say Hello    | Memory allocated using new at constructor      ---------------------
+				|-------------|--------------------------------------------->> | "Hello from string"|
+				|char * Buffer|                                                |                    | 
+				---------------                                                ----------------------
+				                                                                   ^
+				                                                                   |
+				-----------------------                                            |
+				|Input(binary copy of | Pointer value copied due to function call  |
+				|---------------------|---------------------------------------------
+				|char * Buffer        |
+				-----------------------
+				
+				You have now 2 different object pointing to same location as shown above
+				
+		Solution of above problem using copy constructor:
+				class MyString
+				{
+					private:
+						char* Buffer;
+
+					public:
+						MyString(const char* InitialInput)
+						{
+							if(InitialInput != NULL)
+							{
+								Buffer = new char [strlen(InitialInput) + 1];
+								strcpy(Buffer, InitialInput);
+							}
+							else
+							{
+								Buffer = NULL;
+							}
+						}
+						MyString(const MyString& CopySource) // using const ensure that copy constructor doesnt modify the source object being reffered to,and ref as a 
+						                                        parameter otherwise constructer again copy a value and result in shadow copy
+						{
+							if(CopySource.Buffer != NULL)
+							{
+								Buffer = new char [strlen(InitialInput) + 1];
+								strcpy(Buffer, CopySource.Buffer);
+							}
+							else
+							{
+								Buffer = NULL;
+							}
+						
+						}
+						~MyString()
+						{
+							cout << “Invoking destructor, clearing up” << endl;
+							if (Buffer != NULL)
+								delete [] Buffer;
+						}
+
+				};	
+				void UseMyString(MyString Input)
+				{
+					cout << “String buffer in MyString is “ << Input.GetLength();
+					cout << “ characters long” << endl;
+					cout << “Buffer contains: “ << Input.GetString() << endl;
+					return;
+				}
+
+				int main()
+				{
+					MyString SayHello(“Hello from String Class”);
+
+					UseMyString(SayHello);
+
+					return 0;
+				}
+				
+				Pictorial rep:
+				
+				---------------
+				|Say Hello    | Memory allocated using new at constructor      ---------------------
+				|-------------|--------------------------------------------->> | "Hello from string"|
+				|char * Buffer|	                                               ----------------------
+				---------------                                                
+				                                                                   
+				                                                                   
+				-----------------------                                            
+				|Input(binary copy of | Memory allocated using new at constructor    ----------------------
+				|---------------------|--------------------------------------------->| "Hello from string" |
+				|char * Buffer        |                                              -----------------------	
+				-----------------------
+		NOTE:
+			
+			We can declare a private copy constructer to insure the non copyable object of a class.
+			
+			Example:
+				
+				MyString(const MyString&)//copy constructer
+				MyString operator=(const MyString&)
+				
+45)	Singelton Class:
+		
+		Class for which we can create only one instance.
+		
+		When the keyword static is used on a class’s data member, it
+		ensures that the member is shared across all instances.
+		
+		When static is used on a local variable declared within the scope
+		of a function, it ensures that the variable retains its value between
+		function calls.
+		
+		When static is used on a member function—a method—the
+		method is shared across all instances of the class.
+		
+		All the above will play a important role in creating a Singelton class.
+		
+		Example:
+			
+		class President
+		{
+			private:
+			
+				// private default constructor (prohibits creation from outside)
+				
+				President() {};
+				
+				// private copy constructor (prohibits copy creation)
+				
+				President(const President&);
+
+				// private assignment operator (prohibits assignment)
+				
+				const President& operator=(const President&);
+
+				// member data: Presidents name
+				
+				string Name;
+
+			public:
+			
+				// controlled instantiation
+				
+				static President& GetInstance()
+				{
+					// static objects are constructed only once
+					static President OnlyInstance;
+					return OnlyInstance;
+				}
+
+				// public methods
+				string GetName()
+				{
+					return Name;
+				}
+
+				void SetName(string InputName)
+				{
+					Name = InputName;
+				}
+		};
+
+		int main()
+		{
+			President& OnlyPresident = President::GetInstance();
+			
+			OnlyPresident.SetName(“Abraham Lincoln”);
+
+			// uncomment lines to see how compile failures prohibit duplicates
+			// President Second; // cannot access constructor
+			// President* Third= new President(); // cannot access constructor
+			// President Fourth = OnlyPresident; // cannot access copy constructor
+			// OnlyPresident = President::GetInstance(); // cannot access operator=
+
+			cout << “The name of the President is: “;
+			cout << President::GetInstance().GetName() << endl;
+
+			return 0;
+		}
+46) Friend function and class:
+		Used to access private member of a class.
+		
+		Example:
+			
+			class Human
+			{
+				private:
+					int Age;
+					string name;
+					friend void display(const Human& Person);
+			};
+			void display(const Human& Person)
+			{
+				cout<<Person.Age<<endl;
+			}
+47) OOPS concept:
+		a) Encapsulation : Ability to logically group data and method that work using those data . Its like creating a group of attributes and method as one entitiy.
+			
+				Example of encapsulation:
+				
+				class Human
+				{
+					//Attributes / Data
+					string name;
+					string Gender,
+					string DateofBirth, PlaceOfBirth;
+					
+					//Methods
+					void introduceSelf();
+				};
+			//Dot operator helps to access the member of the class Human
+				
+				Example:
+					
+					Human man1;//creating a object of a class Human or creating a instance of that class.
+					
+					man1.name="abc";//aceesing the attribute of class using the object.
+					
+			// Pointer Operator(->) can be used if we declare a pointer of type Human
+				
+				Example:
+					
+					Human* man1= new Human()// creating a pointer of type Human
+					man1->name="abc";
+					
+		b) Abstraction : Abstraction is a very important concept in object-oriented languages. It empowers programmers to decide what attributes of a class need to remain known only to the class and
+						its members with nobody outside it (with the exception of those declared as its “friends”) having access to it.
+		
+		c) Inheritance: By default its private
+				
+				Base class is also called super class.
+				Derived class is also called subclass.
+				
+				Inheritance can be :
+					a) Public
+					b) Protected
+					c) Private
+					
+					Problem with public Inheritance is that it make it possible to modify the attributes outside the class in where it is declared. so this can be handled by
+					using the other access specifier mentioned above
+					
+					Syntac that leads to above problem
+					
+					class Fish
+					{
+						
+						public:
+							bool FreshWaterFish; // accessible only to derived classes
+						
+							void Swim()
+							{
+								if (FreshWaterFish)
+									cout << “Swims in lake” << endl;
+								else
+									cout << “Swims in sea” << endl;
+							}
+					};
+					
+					Possible fix:
+					
+					class Fish
+					{
+						protected:
+						
+							bool FreshWaterFish; // accessible only to derived classes
+
+						public:
+						
+							void Swim()
+							{
+								if (FreshWaterFish)
+									cout << “Swims in lake” << endl;
+								else
+									cout << “Swims in sea” << endl;
+							}
+					};
+					
+				We can overload the constructor if it is intialize in Base class and we want to make some change in derived class.
+				
+				Example:
+				
+				class Base
+				{
+					protected:
+						bool final;
+					public:
+					
+					Base(bool abc):final(abc)
+					{
+						do something	
+					}
+					void swim()
+					{
+						if (final==true)
+						{}
+						else
+						{}
+					}
+				};
+				class Derived:public Base
+				{
+					public:
+						Derived():Base(true)
+						{
+						}
+				};
+			
+			Derived Class Overriding Base Class’ Methods:
+				
+				If we want to reuse the function in the base class and add the modification in that but we dont change the declaration of same function,
+				then this is called function overriding.
+				
+				If you want to be invoke Fish::Swim() in Listing 10.4 via main(), you need to use the scope resolution operator (::) in the following syntax:
+				myDinner.Fish::Swim();
+				
+				we can use scope resolution if we reuse the function from Base class into Derived class and add some modificationon top of that.
+			
+			Derived Class Hiding Base Class’ Methods
+				
+				Overriding can take an extreme form where Tuna::Swim() can potentially hide all overloaded
+				versions of Fish::Swim() available, even causing compilation failure when the
+				overloaded ones are used.
+				
+			
+				
+				So, if you want to invoke the Fish::Swim(bool) function via an instance of Tuna, you
+				have the following solutions:
+				
+					Solution 1: Use the scope resolution operator in main():
+								myDinner.Fish::Swim();
+					Solution 2: Use the using keyword in class Tuna to unhide Swim() in class
+								Fish:
+								class Tuna: public Fish
+								{
+									public:
+										using Fish::Swim; // unhide Swim methods in base class Fish
+										void Swim()
+										{
+											cout << “Tuna swims real fast” << endl;
+										}
+								};
+					
+					Solution 3: Override all overloaded variants of Swim() in class Tuna (invoke
+								methods of Fish::Swim(...) via Tuna::Fish(...) if you want):
+								
+								class Tuna: public Fish
+								{
+									public:
+										void Swim(bool FreshWaterFish)
+										{
+											Fish::Swim(FreshWaterFish);
+										}
+										void Swim()
+										{
+											cout << “Tuna swims real fast” << endl;
+										}
+								};
+			public inheritance :(is-a relationship)
+			private inheritance:(has-a relationship)
+				
+				Private inheritance means that only derived class can use the funnction of Base class not any other class having possesspn of instance of derived class.
+				
+			Protected inheritance :
+				
+				Almost same as private inheritance just it allow the derived class and the one inherit the derived class to use the Base class.
+				
+				Slicing: problem when we pass the derived class value into base class then there is a possiblity that only base class is passed to a particular fn,
+				to overcome slicing it better to pass the reference.
+				
+			Multiple Inheritance:
+				
+				When we want functionality from more than one class.
+				
+				Example:
+				class Derived : public Base1, public Base2
+				{
+				}
+		Imp Questions
+			
+			Q A derived class uses public inheritance in relating to its base class. Can it
+			access the base class’ private members?
+			
+			A No. The compiler always ensures that the most restrictive of the applicable access
+			specifiers is in force. Irrespective of the nature of inheritance, private members of
+			a class are never compromised (that is, accessible) outside the class. An exception
+			to this rule is those classes and functions that have been declared as a friend.
+			
+		d) Polymorphism:
+			
+			Feature of C++ which allows object of different type to be treated same.
+			
+			Real life example of polymorphism, a person at the same time can have different characteristic. Like a man at the same time is a father, a husband, an employee. So the same person posses different behavior in different situations. This is called polymorphism.
+			Polymorphism is considered as one of the important features of Object Oriented Programming.
+			In C++ polymorphism is mainly divided into two types:
+
+				Compile time Polymorphism
+				Runtime Polymorphism
+				
+				                    Polymorphism
+									/			\
+								   /			 \
+						CompileTime               RunTime
+						/       \                  \
+			Method	   /		 \ Operator			Virtual Functions
+			Overriding			Overloading
+			
+			
+			1) Function Overloading: When there are multiple functions with same name but different parameters then these functions are said to be overloaded. Functions can be overloaded by change in number of arguments or/and change in type of arguments.
+			Rules of Function Overloading
+			class Geeks 
+			{ 
+				public: 
+				// function with 1 int parameter 
+				void func(int x) 
+				{ 
+					cout << "value of x is " << x << endl; 
+				} 
+      
+				// function with same name but 1 double parameter 
+				void func(double x) 
+				{ 
+					cout << "value of x is " << x << endl; 
+				} 
+      
+				// function with same name and 2 int parameters 
+				void func(int x, int y) 
+				{ 
+					cout << "value of x and y is " << x << ", " << y << endl; 
+				} 
+			}; 
+  
+			int main() { 
+      
+				Geeks obj1; 
+      
+				// Which function is called will depend on the parameters passed 
+				// The first 'func' is called  
+				obj1.func(7); 
+      
+				// The second 'func' is called 
+				obj1.func(9.132); 
+      
+				// The third 'func' is called 
+				obj1.func(85,64); 
+				return 0; 
+			}  
+			2) Operator Overloading: C++ also provide option to overload operators. For example, we can make the operator (‘+’) for string class to concatenate two strings. We know that this is the addition operator whose task is to add two operands. So a single operator ‘+’ when placed between integer operands , adds them and when placed between string operands, concatenates them.
+
+				class Complex { 
+				private: 
+					int real, imag; 
+				public: 
+					Complex(int r = 0, int i =0)  {real = r;   imag = i;} 
+       
+				// This is automatically called when '+' is used with 
+				// between two Complex objects 
+				Complex operator + (Complex const &obj) { 
+					Complex res; 
+					res.real = real + obj.real; 
+					res.imag = imag + obj.imag; 
+					return res; 
+				} 
+				void print() { cout << real << " + i" << imag << endl; } 
+				}; 
+   
+				int main() 
+				{ 
+					Complex c1(10, 5), c2(2, 4); 
+					Complex c3 = c1 + c2; // An example call to "operator+" 
+					c3.print(); 
+				} 
+				
+			3) Runtime polymorphism: This type of polymorphism is achieved by Function Overriding.
+				Function overriding on the other hand occurs when a derived class has a definition for one of the member functions of the base class. That base function is said to be overridden.
+
+				class base 
+				{ 
+					public: 
+						virtual void print () 
+						{ cout<< "print base class" <<endl; } 
+   
+						void show () 
+						{ cout<< "show base class" <<endl; } 
+				}; 
+   
+				class derived:public base 
+				{ 
+					public: 
+						void print () //print () is already virtual function in derived class, we could also declared as virtual void print () explicitly 
+						{ cout<< "print derived class" <<endl; } 
+   
+						void show () 
+						{ cout<< "show derived class" <<endl; } 
+				}; 
+  
+				//main function 
+				int main()  
+				{ 
+					base *bptr; 
+					derived d; 
+					bptr = &d; 
+       
+					//virtual function, binded at runtime (Runtime polymorphism) 
+					bptr->print();  
+       
+					// Non-virtual function, binded at compile time 
+					bptr->show();  
+  
+					return 0; 
+				}  
+				
+				NOTE:
+				
+					When we use virtual function then priority of base class function will get less than the derived class so derived will get executed first.
+					We need virtual descructor in order to prevent memory leaks.
+		When we make use of virtual function then in that case compiler decide on runtime which function to call based on the object used for calling the function.
+		VFT(Virtual Function Table) is a concept which work in background to invoke the appropriate function.(Please 294-296 pages)
+		
+		
+		
+		
+		Abstract Base Class and Pure Virtual Functions:
+		
+			A base class that cannot be instantiated is called an abstract base class. Such a base class fulfills only one purpose, that of being derived from. 
+			C++ allows you to create an abstract base class using pure virtual functions. A virtual method is said to be pure virtual when it has a declaration as shown in the
+			following:
+			
+				class AbstractBase
+				{
+					public:
+						virtual void DoSomething() = 0; // pure virtual method
+				};
+			
+		Virtual inheritance:
+		
+			Problems caused in an inheritance hierarchy containing two or more base classes that inherit from a common base, which
+			results in the need for ambiguity resolution in the absence of virtual inheritance, is called the Diamond Problem.
+			The name “Diamond” is possibly inspired by the shape the class diagram takes (visualize Figure 11.2 with straight and slanted
+			lines relating Platypus to Animal via Mammal, Bird, and Reptile to see a diamond).
+			
+			The virtual keyword in C++ often is used in different contexts for different purposes. (My best guess is that someone wanted to
+			save time on inventing an apt keyword.) Here is a summary: A function declared virtual means that an existing overriding function
+			in a derived class is invoked. An inheritance relationship declared using keyword virtual
+			between classes Derived1 and Derived2 that inherits from class Base means that another class Derived3 that inherits from
+			Derived1 and Derived2 still results in the creation of only one instance of Base during instantiation of type Derived3.
+			Thus the same keyword virtual is used to implement two different concepts. 
+			
+		
+		Operators:
+			a) Unary : work with one operand.
+			b) Binary : work with 2 operand
+			
+				Unary: This is done as cout doesnt know how to display Holiday as it is of Date Type
+				
+					class Date
+					{
+						private:
+							int Day; // Range: 1 - 30 (lets assume all months have 30 days!
+							int Month;
+							int Year;
+
+							string DateInString;
+						public:
+
+						// Constructor that initializes the object to a day, month and year
+							Date (int InputDay, int InputMonth, int InputYear): Day (InputDay), Month (InputMonth), Year (InputYear) {};
+
+							operator const char*()
+							{
+								ostringstream formattedDate;
+								formattedDate << Day << “ / “ << Month << “ / “ << Year;
+
+								DateInString = formattedDate.str();
+								return DateInString.c_str();
+							}
+					};
+
+					int main ()
+					{
+						// Instantiate and initialize a date object to 25 Dec 2011
+						Date Holiday (25, 12, 2011);
+
+						cout << “Holiday is on: “ << Holiday << endl;
+	
+						return 0;
+					}
+				
+				Binary : That function on 2 operands
+				
+				//Implementation of Date+abc
+				Date operator+(Date abc)
+				{
+				Date Newdate(Date+abc,Month,year);
+				return Newdate;
+				}
+				
+				//Implementation of Date+=abc
+				//This will 
+				void operator+=(int DaystoAdd)
+				{
+					Day+=DaystoAdd;
+				}
+				
+			
+		
+		
+		
+		Casting Operators:
+		
+			Operators that changed interpretation of the object.
+			Only one diadvantage it is bit clumsy to write as compared to C-Style in case of static_cast. all other cast except dynamic cast is avoidable in C++
+			
+				a) Static Cast : Perform conversions between pointers to related classes, not only from the derived class to its base, but also from a base class to its derived.
+				This ensures that at least the classes are compatible if the proper object is converted, but no safety check is performed during runtime to check if the object 
+				being converted is in fact a full object of the destination type. Therefore, it is up to the programmer to ensure that the conversion is safe. On the other side,
+				the overhead of the type-safety checks of dynamic_cast is avoided.
+				
+					class CBase {};
+					class CDerived: public CBase {};
+					CBase * a = new CBase;
+					CDerived * b = static_cast<CDerived*>(a);
+					
+					
+					This would be valid, although b would point to an incomplete object of the class and could lead to runtime errors if dereferenced.
+
+					static_cast can also be used to perform any other non-pointer conversion that could also be performed implicitly, 	
+					
+				b) dynamic_cast : dynamic_cast can be used only with pointers and references to objects. Its purpose is to ensure that
+				   the result of the type conversion is a valid complete object of the requested class. Therefore, dynamic_cast is always successful
+				   when we cast a class to one of its base classes:
+				   
+					class CBase { };
+					class CDerived: public CBase { };
+
+					CBase b; CBase* pb;
+					CDerived d; CDerived* pd;
+
+					pb = dynamic_cast<CBase*>(&d);     // ok: derived-to-base
+					pd = dynamic_cast<CDerived*>(&b);  // wrong: base-to-derived 
+					
+					The second conversion in this piece of code would produce a compilation error since base-to-derived conversions are not allowed with dynamic_cast
+					unless the base class is polymorphic.When a class is polymorphic, dynamic_cast performs a special checking during runtime to ensure that the expression
+					yields a valid complete object of the requested class:
+					
+					Compatibility note: dynamic_cast requires the Run-Time Type Information (RTTI) to keep track of dynamic types. Some compilers support this feature 
+					as an option which is disabled by default. This must be enabled for runtime type checking using dynamic_cast to work properly.
+					
+					If dynamic_cast is used to convert to a reference type and the conversion is not possible, an exception of type bad_cast is thrown instead.
+
+					dynamic_cast can also cast null pointers even between pointers to unrelated classes, and can also cast pointers of any type to void pointers (void*).
+					
+				
+				c) reinterpret_cast:
+				   reinterpret_cast converts any pointer type to any other pointer type, even of unrelated classes. The operation result is a simple binary copy of the value from one pointer to the other. 
+				   All pointer conversions are allowed: neither the content pointed nor the pointer type itself is checked.It can also cast pointers to or from integer types. The format in which this 
+				   integer value represents a pointer is platform-specific. The only guarantee is that a pointer cast to an integer type large enough to fully contain it, is granted to be able to be 
+				   cast back to a valid pointer.
+				   
+					class A {};
+					class B {};
+					A * a = new A;
+					B * b = reinterpret_cast<B*>(a);
+					
+				   This is valid C++ code, although it does not make much sense, since now we have a pointer that points to an object of an incompatible class, and thus dereferencing it is unsafe.
+				
+				d) const_cast:
+				   
+				   This type of casting manipulates the constness of an object, either to be set or to be removed. For example, in order to pass a const argument to a function that expects
+				   a non-constant parameter:
+				   
+				   // const_cast
+				   #include <iostream>
+				   using namespace std;
+
+				   void print (char * str)
+				   {  
+						cout << str << endl;
+				   }
+
+				   int main () {
+				   const char * c = "sample text";
+			       print ( const_cast<char *> (c) );
+				   return 0;
+				   }
+				   
+				Casting a Derived* to a Base* is called upcasting and can be done without any explicit casting operator:
+				Casting a Base* to a Derived* is called downcasting and cannot be done without usage of explicit casting operators
+				Therefore, this mechanism of identifying the type of the object at runtime is called runtime type identification or RTTI.
+			
+			Questions Imp:
+				
+				I need a Bird*, but have a Dog* at hand. The compiler does not allow me to use the pointer to the Dog object as a Bird*. However, when I use reinterpret_
+				cast to cast the Dog* to Bird*, the compiler does not complain and it seems I can use this pointer to call Bird’s member function, Fly(). Is this okay?
+			Ans: Again, definitely not. reinterpret_cast changed only the interpretation of the pointer, and did not change the object being pointed to (that is still a Dog).
+				Calling a Fly() function on a Dog object will not give the results you are looking for, and could possibly cause an application failure.
+				
+				You have a base class object pointer pBase. What cast would you use to determine whether it is a Derived1 type or a Derived2 type?
+			Ans : dynamic_cast
+				2. You have a const reference to an object and tried calling a public member function, written by you. The compiler does not allow this because the function
+				   in question is not a const member. Would you correct the function or would you use const_cast?
+			Ans:   Will ofcourse change in function using const_cast is last measure when there is no other option
+				3. reinterpret_cast should be used only when static_cast does not work, and the cast is known to be required and safe. True or false?
+			Ans: True
+				4. Is it true that many instances of static_cast-based conversions, especially between simple data types, would be performed automatically by a good C++
+					compiler?
+			Ans: Yes
+			
+	
+	
+	
+	
+	
+	
+	
+	Preprocessor:
+		
+		Runs before the compiler starts and based on it system is build the way it is instructed.
+		Advantages:
+			a) Faster than the functioncall doing same functionality, as in function call we require cpu stack and takes more cpu time.
+		Disadvanatges of Macro:
+			a) Not any form of type safety
+			b) No debugging for macros
+		Two Types:
+			a) Macro constant: Its like a text replacement of something , if we need constant we should use const instead.
+				
+				#define abcd 0
+			b) Macro function::#define AREA_CIRCLE(r) (PI*(r)*(r)) why r in () as r could be sum of 2 number and macro are text representation so we can write as (4+6)
+				
+				#define square(x) (x*x)
+				
+				Assert Macro:
+				
+				assert (expression that evaluates to true or false)
+				#include <assert.h>
+				int main()
+				{
+					char* sayHello = new char [25];
+					assert(sayHello != NULL); // throws up a message if pointer is NULL
+					// other code
+					delete [] sayHello;
+					return 0;
+				}
+				assert() is typically disabled in release modes and provides you with an error message or information only in the debug build of
+				most development environments.Additionally, some environments have implemented this as a function, not as a macro.
+				
+	Templates:
+		
+		The Different Types of Template Declarations:
+		
+ 			A declaration or definition of a function
+ 			A declaration or definition of a class
+ 			A definition of a member function or a member class of a class template
+ 			A definition of a static data member of a class template
+ 			A definition of a static data member of a class nested within a class template
+ 			A definition of a member template of a class or class template
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+48) Standard Template Libraray:
+	
+	Containers are STL classes that are used to store data. STL supplies two types of container classes:
+	In addition to these STL also provides classes called Container Adapters that are variants of the same with reduced functionality which support a specific purpose.
+	Container adapters:
+	a) std::stack
+	b) std::queue
+	c) std::priority_queue
+	
+	a)Sequential containers
+	
+		Container that are used to hold the data in the sequential manner such as arrays and list . These includes:
+		a) std::vector
+		b) std:: dequeue
+		c) std:: list
+		d) std :: forward_list
+	b) Associative containers
+	
+		Associative containers are those that store data in a sorted fashion—akin to a dictionary.This results in slower insertion times, but presents significant
+		advantages when it comes to searching.
+		
+		The associative containers supplied by STL are
+
+		a) std::set—Stores unique values sorted on insertion in a container featuring logarithmic complexity.
+		b) std::unordered_set—Stores unique values sorted on insertion in a container featuring near constant complexity. Available starting C++11.
+		c) std::map—Stores key-value pairs sorted by their unique keys in a container with logarithmic complexity
+		d) std::unordered_map—Stores key-value pairs sorted by their unique keys in a container with near constant complexity. Available starting C++11.
+        e) std::multiset—Akin to a set. Additionally, supports the ability to store multiple items having the same value; that is, the value doesn’t need to be unique.
+		f) std::unordered_multiset—Akin to a unordered_set. Additionally, supports the ability to store multiple items having the same value; that is, the value doesn’t need
+		   to be unique. Available starting C++11.
+		g) std::multimap—Akin to a map. Additionally, supports the ability to store keyvalue pairs where keys don’t need to be unique.
+		h) std::unordered_multimap—Akin to a unordered_map. Additionally, supports the ability to store key-value pairs where keys don’t need to be unique. Available starting
+		   C++11.
+		   
+		   
+		   
+		   
+	Advantage and disadvantage of different STL:
+	
+	Name					Advantage 														      Disadvantage
+	
+	std::vector			    Constant insertion time at the end,Array like access	              Resizing will result in performance loss,searching time is 
+																								  proportional to number of elemnets in the vector
+																								  
+	std::deque				All advantage of vector plus const insertion time                     Perfromace loss while resizing 
+	
+	std::list 				Constant insertion and deletion time regardless of 
+							size and position of element in the list							  Cannot access element with index,search time proportional to elements in the 
+																								  container.
+	
+	std::forwardlist		Iteration only in one direction 									  Can push element only in front.
+	
+	std::set				Search is not proportional to the element it is logarithmic			  Insertion of element is slower
+	
+	std::unorderedset 		Search, insertion, removal is nearly independent of the elements      Elements are weakly ordered and one cannot rely on their relative position
+
+	std::multiset           Should be used when set need to contain non unique value              Insertion of elements is slower
+	
+	std::unordered_multiset Should be preferred over unordered set when we want to store          Elements are weekly ordered
+							non unique values.									
+							
+	std::map				Stores the key value pair makes search time logarithmic				  Elements are sorted on insertion so slow insertion time
+	
+	std::unordered_map		Searching deletion in constant time									  Element are loosely coupled
+	
+	std::multimap 			Selection over map when we want to store non unique key
+	
+	
+	
+	
+	
+	Iterator :
+	Its like a pointer which help is accessing and working with STL container:
+	a) Forward iterator : moves in one direction used for input and output , useful in the case of singly linkedlist
+	b) Bidirectional iterator : Moves bidirectional useful in the case of doubly linkedlist.
+	c) Random access iterators : useful in the case of array/vector	.
+	
+	
+	STL String classes:
+	
+	Advantage:
+	
+	a) Reduces the effort of creation and manipulating strings
+	b) Supplies copy constructor and assignment operators that automatically ensure that member strings get correctly copied
+	c) Supplies useful utility functions that help in copying, truncating, finding, and erasing to name a few
+	d) Provides operators that help in comparisons
+	
+	
+	Initialize
+	
+	std::string str("andnand");
+		 or
+	std::string strcopy(str);
+		or
+	std:: string substring(str,5);//this will take first 5 character of string str
+	
+	
+	Accessing character content of string:
+	
+		for ( size_t nCharCounter = 0; nCharCounter < strSTLString.length (); ++ nCharCounter )
+		{
+		str[nCharCounter];
+		}
+		
+			OR
+		string::const_iterator itr;
+		
+		for(itr=str.begin();itr<str.end();itr++)
+		{
+		*itr;
+		}
+		
+	Conatenating One String to Another:
+		
+		a) using string::operator+=
+			str1+=str2
+		b) using append()
+			
+			str.append(str2)
+			
+	Finding a char / substring using find():
+		
+		str.find(value_to_find, starting position);
+		
+	String reversal using reverse()
+		
+		reverse(str.begin(),str.end())
+		
+	string case conversion using transform():
+		
+		transform(str.begin(),str.end(),str.begin,toupper);
+		
+	STL dynamic array classes:
+	
+		std::list<int>::const_iterator iElementInSet; //This is used when we want to just traverse a read the value 
+		
+		std::list<int>::iterator iElementInSet;//this is used when we will manipulate the values using iterator
+		
+	
+		Instatntiate a Vector:
+		
+		vector<int> VectorName(10);//vector with initial size of 10
+		vector<int> VectorName(10,90);//vector with initial size of 10 and default value is 90
+		vector<int> VectorNew(VectorName);//Vector intialize by another vector, This VectorNew is copy of VectorName
+		vector<int> VectorNew(VectorName.cbegin(),VectorName.cbegin()+5);//Vector initialize with first 5 elements of VectorName, for this the types should be same
+		
+		
+		vector.push_back(element) : Used to push element in the end of the array/vector.
+		
+		vector.insert()//used to insert value at a particular location.
+		
+		Eg:
+			vector.insert(position,value)
+				
+				or
+			vector.insert(position,number_of_times,value)
+				
+				or
+			vector.insert(vector.begin()+1, vectorAnother.begin(),vectorAnother.end())//Inserting the another vector at position[1].
+			
+		push_back() is preferred over insert() because inserting in the middle will cause shifting of subsequent elements backwards.
+		
+	Access vector using at() and []
+vector.at(position)// will gives the element at a particular position
+
+
+Removal of element:
+	
+	pop_back(): used to remove last element from the vector.
+	
+
+deque:
+
+	Different from the vector that we can insert and delete from both front and back using:
+	
+		push_back()
+		push_front()
+		pop_back()
+		pop_front()
+		
+List() : its a doubly linked list //Insertion in middle is at a constant time
+	Initialize:
+		
+		std::list<int> listintegers;
+			
+			or 
+		std::list<int> listIntegers(10);
+			or
+		std::list<int> listIntegers(10,99);
+		
+			or
+		std::list<int> listIntegerNew(listIntegers);
+		
+	Usage:
+		
+		Same function as used in deque:
+		list.push_back();
+		list.push_front();
+		
+		Erase a elememt:
+		list.erase(elememt)//
+		list.erase(vec.begin(),vec.end())//delete the range of values
+		
+		Reverse a list:
+		list.reverse()
+		
+		
+		Sort the list:
+		list.sort()//sort the list in ascending order
+		 
+			OR
+		to make it ascending:
+		bool list_descending(const int&abc,const int & bcd)
+		{
+			return (abc>bcd);
+		}
+		list.sort(list_descending);
+		
+	We can comapre or sort the list , if the value inside list is not a standard datatype rather it is class type
+		
+forward-list:
+
+	Similiar to list but in this we can insert value in only one direction so we have only push_front() and we dont have push_back()
+	
+	and ofcourse we can use insert()
+	
+	
+	
+	
+	
+Prefer the use of list over vector if we have insertion, deletion in the middle of the stl
+Prefer the use of vector if we have insertion and deletion of element in the front and end only.
+
+Why does the list provide member functions such as sort and remove?
+A The STL list class is bound to respect the property that iterators pointing to elements
+in the list should remain valid irrespective of the position of the elements
+in the list itself. Although STL algorithms work on list too, the list’s member
+functions ensure that the aforementioned property of the list is withheld and iterators
+pointing to elements in the list before the sort was done continue to point to
+the same elements even after the sort
+
+
+
+set:
+		To facilitate quick searching in STL , STL implements the set,multiset and unordered set
+		
+		a) Differnce betweem set and multiset is that , later allows duplicate to store in sorted manner whereas the  former doesnt allow any duplicate to store but it will compile and dont throw error.
+		b) Internal implementation of set is based on binary tree so every element is inserted in a sorted manner inside the set, so this mean element at a given position cannot ne replaced by another element like it
+		   is done in vector.
+		#include <set>
+		
+	Instantiate set:
+		
+		#include<set>
+		using namespace std;
+		template<typename T>
+		struct SortDescending
+		{
+			bool operator()(const T& val1 , const T& val2) const
+			{
+				return (val>val2);
+			}
+		};
+		int main()
+		{
+			set<int> setIntegers1; // will store the values in ascending sort order
+			set<int,SortDescending<int>>sortIntegers2; // will store the value in descending sort order
+			set<int>sortInteger3(sortIntegers2.begin(),sortIntegers2.end());// here also if we dont want to include sort property everytime we can makeuse of a set already having that property
+			set<int>sortInteger4(setIntegers1.begin(),setIntegers1.end());
+		}
+	
+	Insertion of elememt:
+		a) set.insert(elememt)
+	Counting:
+		b) set.count(elememt)
+		
+		
+	Example:
+	
+        #include <stdio.h>
+        #include <iostream>
+        #include <set>
+        using namespace std;
+        template<typename T>
+        void DisplaySet(const T& input)
+        {
+            for(auto iterator=input.begin();iterator!=input.end();++iterator)
+            {
+                cout<<*iterator<<endl;
+            }
+        }
+        int main()
+        {
+            multiset<int>setIntegers;
+            setIntegers.insert(100);
+            setIntegers.insert(10);
+            setIntegers.insert(500);
+            setIntegers.insert(500);
+            setIntegers.insert(-10);
+            DisplaySet(setIntegers);
+            cout<<setIntegers.count(500);
+            auto iter=setIntegers.find(500);
+            if(iter!=setIntegers.end())
+            {
+                cout<<endl;
+                cout<<"Value=500 found"<<endl;
+            }
+            else
+            {
+                cout<<"Value not found";
+            }
+            return 0;
+        }
+		
+	Erasing:
+		erase(key) : key /iteraor is used to be erased from the set, if u use iterator then it will delete only one element matching as done in above code else it will delete all the occurance of the element.
+	
+    Map and multimap:
+		
+		Initialize:
+			map<int,string>mmap;
+			multimap<int,string>mmmap;
+			
+				or
+			map<int,string>mmap_Copy(mmap.begin(),mmap.end())
+			multimap<int,string>mmmap_copy(mmmap.begin(),mmmap.end())
+			
+				or
+			template<typename KeyType>
+			struct ReverseSort{
+			bool operator()(const KeyType& one, const KeyType&two)
+			{
+			return (one>two);
+			}
+			};
+			map<int,string,ReverseSort<int>>mmap_userDef;
+			
+			
+			
+			
+			
+49) Function Objects:
+	Object of class that implement operator()
+	
+		a) Unary Function:
+			
+			template <typename elementType>
+			struct DisplayElement
+			{
+				void operator () (const elementType& element) const
+				{
+					cout << element << ‘ ‘;
+				}
+			};
+			example :
+			bool isPrime(const intinput)
+			{
+			
+			}
+				find_if(vector.begin(),vector.end(),isPrime);
+		b) Binary function : which takes 2 arguments, serve as one of the criteria in any algoritm to modify for example comparing 2 values.
+			 bool personSortCriterion (const Person& p1, const Person& p2)
+			{}	
+			Exmaple:
+			sort(abc.begin(),abc.end(),personSortCriterion);
+			
+			
+	What kind of a function object should I use in a call to a function such as
+	remove_if?
+	A You should use a unary predicate that would take the value to be processed as the
+	initial state via the constructor.
+	Q What kind of a function object should I use for a map?
+	A You should use a binary predicate.
+	Q Is it possible that a simple function with no return value can be used as a
+	predicate?
+	A Yes. A function with no return values can still do something useful. For example, it
+	can display input data.
+	
+50) Lambda Function:
+	Function that doesnt have a name but execute a small functionality like printing ,comparision etc.
+	
+		a) Lambda function starts with '[]', this indicates compiler that lambda function has started.//capture list([])//we can store diff states
+		b) After '[]' we use paramter in '()' and  write code in '{}'
+		 we can add keyword mutable if we feel that state variable will be modified inside the lambda
+	Example:
+		
+		for_each ( listChars.begin () // Start of range
+		, listChars.end () // End of range
+        ,[](char& element) {cout << element << ‘ ‘; } ); // lambda
+		
+		
+				OR
+		auto iEvenNum = find_if( vecNums.cbegin()
+		, vecNums.cend() // range to find in
+		, [](const int& Num){return ((Num % 2) == 0); } );
+		
+				OR
+		int Divisor = 2; // initial value
+		auto iElement = find_if ( begin of a range
+		, end of a range
+		, [Divisor](int dividend){return (dividend % Divisor) == 0; } );
+		
+		
+				OR
+		[&StateVar1, &StateVar2](Type& param) { // lambda code here; } // if u want to preserve changes made in lambda outside the function
+		
+				OR
+		[State1, State2](Type1 var1, Type2 var2) -> ReturnType{ return (value or expression ); }// if you want to mention return type
+				
+				OR
+		Finally, the compound statement {} can hold multiple statements, each separated by a ; as shown here:
+		[State1, State2](Type1 var1, Type2 var2) -> ReturnType
+		{ Statement 1; Statement 2; return (value or expression); }
+		
+51) STL Algorithms:
+		a) Non Mutating Algorithm:
+			Algorithm that can niether change the order nor the contents of the container.
+			Example:
+				a) Counting Algorithm:
+					a) count(): count(vec.begin(),vec.end(),value)-> number of count of value
+					b) count_if() : count_if(vec.begin(),vect.end(),lambda/unary predicate)
+				b) Searching Algorithm:
+					a) search() : used to find a pattern in another STL. Example: search(vect.begin(),vect.end(),list_forPattern.begin(),list_forPattern.end())
+					b) search_n() : search if number of occurence are there for a value. search_n(vect.begin,vect.end(),no_of_occurence,value_to_find)
+					c) find(): find(vec.begin,vec.end(),value)
+					d) find_if(): find_if(vec.begin(),vec,end,lambda func/unary predicate)
+					e) find_end() : find the last occurance of the value
+					f) adjacent_find() : find the 2 elememt that satisfy the condition or that have same values.
+				c) Comparision Algorithm:
+					a) equal():
+		b) Mutating Algorithm:
+			That can change the content or the order of the sequence.
+				a) Initialization Algorithm
+					a) fill : fill the specified value in the given range. Example fill(vect.begin(),vect.end(),value_to_be_Filled)
+					b) fill_n: : used to fill n time same value in the STL. Example fill_n(vect.begin()+offset_to_start,number_of_times,value_to_be_Filled)
+					c) generate: Generate random values. Example generate(vec.begin(),vec.end(),rand)//rand for random value
+					d) generate_n: Generate value for n entries . Example generate_n(vec.begin,5,rand)
+				b) Modifying Algorithm:
+					a) transform Exmaple transform(vec1.begin(),vec2.end(),vect_To_chnage.begin(),function)
+							
+								 Exmaple : transform ( vecIntegers1.begin () // start of source range 1
+											, vecIntegers1.end () // end of source range 1
+											, vecIntegers2.begin () // start of source range 2
+											, dqResultAddition.begin ()// start of destination range
+											, plus <int> () ); // binary functiontransform ( vecIntegers1.begin () // start of source range 1
+											, vecIntegers1.end () // end of source range 1
+											, vecIntegers2.begin () // start of source range 2
+											, dqResultAddition.begin ()// start of destination range
+											, plus <int> () ); // binary function
+					b) for_each: Processing each element in the range
+				c) Copy Algorithm:
+					a) copy
+					b) copy_backward
+				d) Removal Algorithm:
+				
+				
+				e) Replacement Algorithm:
+				
+				
+				
+				f) Sorting Algorithm:
