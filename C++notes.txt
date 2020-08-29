@@ -112,11 +112,11 @@
 			a) Local
 			b) Global
 17) Datatype and Values:
-	a) bool : true or false
-	b) char : 0 to 256
-	c) unsigned short int : 0 to 65535
-	d) short int : -32768 to 32767
-	e) unsigned long int : 0 to 4,294,967,295
+	a) bool : true or false (1 Bit)
+	b) char : 0 to 256 (1 Byte)
+	c) unsigned short int : 0 to 65535 (2 Bytes)
+	d) short int : -32768 to 32767 (2 Bytes)
+	e) unsigned long int : 0 to 4,294,967,295 (4 Bytes)
 
 18) Signed and Unsigned
 	MSB : tells whether the number is positive or negative , 1 means negative and 0 means positive , so 1Byte = -128 to 127
@@ -473,7 +473,7 @@
 			Human(int age, string humanName)
 			{
 				Age=age;
-				name= humanName;
+				NAME= HUMANNAME;
 			}
 			}
 			int main()
@@ -804,7 +804,7 @@
 					Problem with public Inheritance is that it make it possible to modify the attributes outside the class in where it is declared. so this can be handled by
 					using the other access specifier mentioned above
 					
-					Syntac that leads to above problem
+					Syntax that leads to above problem
 					
 					class Fish
 					{
@@ -923,7 +923,7 @@
 			public inheritance :(is-a relationship)
 			private inheritance:(has-a relationship)
 				
-				Private inheritance means that only derived class can use the funnction of Base class not any other class having possesspn of instance of derived class.
+				Private inheritance means that only derived class can use the function of Base class not any other class having possesspn of instance of derived class.
 				
 			Protected inheritance :
 				
@@ -952,7 +952,7 @@
 			
 		d) Polymorphism:
 			
-			Feature of C++ which allows object of different type to be treated same.
+			Feature of C++ which allows object of different type to be treated same.(Polymorphism is the ability of an object to take on many forms.)
 			
 			Real life example of polymorphism, a person at the same time can have different characteristic. Like a man at the same time is a father, a husband, an employee. So the same person posses different behavior in different situations. This is called polymorphism.
 			Polymorphism is considered as one of the important features of Object Oriented Programming.
@@ -1281,7 +1281,7 @@
 		
 		Runs before the compiler starts and based on it system is build the way it is instructed.
 		Advantages:
-			a) Faster than the functioncall doing same functionality, as in function call we require cpu stack and takes more cpu time.
+			a) Faster than the function call doing same functionality, as in function call we require cpu stack and takes more cpu time.
 		Disadvanatges of Macro:
 			a) Not any form of type safety
 			b) No debugging for macros
